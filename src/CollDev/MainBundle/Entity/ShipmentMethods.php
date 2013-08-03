@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ShipmentMethods
  *
- * @ORM\Table()
+ * @ORM\Table(name="ya9dh_virtuemart_shipmentmethods")
  * @ORM\Entity(repositoryClass="CollDev\MainBundle\Entity\ShipmentMethodsRepository")
  */
 class ShipmentMethods
@@ -83,7 +83,21 @@ class ShipmentMethods
      * @ORM\Column(name="created_on", type="datetime")
      */
     private $createdOn;
-
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="created_by", type="integer")
+     */
+    private $createdBy;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified_on", type="datetime")
+     */
+    private $modifiedOn;
+    
     /**
      * @var integer
      *
@@ -322,7 +336,53 @@ class ShipmentMethods
     {
         return $this->createdOn;
     }
+    
+    /**
+     * Set createdBy
+     *
+     * @param integer $createdBy
+     * @return ShipmentMethods
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->createdBy = $createdBy;
+    
+        return $this;
+    }
 
+    /**
+     * Get createdBy
+     *
+     * @return integer 
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * Set modifiedOn
+     *
+     * @param \DateTime $modifiedOn
+     * @return ShipmentMethods
+     */
+    public function setModifiedOn($modifiedOn)
+    {
+        $this->modifiedOn = $modifiedOn;
+    
+        return $this;
+    }
+
+    /**
+     * Get modifiedOn
+     *
+     * @return \DateTime 
+     */
+    public function getModifiedOn()
+    {
+        return $this->modifiedOn;
+    }
+    
     /**
      * Set modifiedBy
      *
@@ -335,7 +395,7 @@ class ShipmentMethods
     
         return $this;
     }
-
+    
     /**
      * Get modifiedBy
      *
