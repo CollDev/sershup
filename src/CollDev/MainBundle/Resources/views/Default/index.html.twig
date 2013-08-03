@@ -1,1 +1,8 @@
-Hello
+{% extends 'CollDevMainBundle::layout.html.twig' %}
+
+{% block content %}
+    <p>Vigencia {{ message.vigencia }}</p>
+    {% if message.update is defined and message.update == true %}
+    <p>Actualizar</p>
+    {% endif %}
+{% endblock %}
