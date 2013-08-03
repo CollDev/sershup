@@ -16,30 +16,51 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $baseURL = 'http://www.serpost.com.pe/';
+        $return = $this->checkValidation();
+        if ($return[0]['validity'] == true) {
+            $this->updateShipping();
+        }
         
-        $urlEndpoint = 'calculaRC2/tarifaInternacional2.jsp';
-        $urlMercaderias = 'calculaRC2/tarifaEms2.jsp';
+        return array('message' => $return[0]);
+    }
+    
+    /**
+     * Check prices validity from Serpost webpage.
+     */
+    private function checkValidation()
+    {
+        $baseURL = $this->container->getParameter("serpost_url");
+        
+        $tarifaInternacional = $this->container->getParameter("serpost_tarifaInt");
+        $tarifaMercaderias = $this->container->getParameter("serpost_tarifaMerc");
 
-        $interFirstClass = 'body div#result_tarifa table caption';
-        $vigencia = 'div.informacion-servicio div';
+        $interSecondClassValidity = $this->container->getParameter("serpost_interSecondClassValidity");
 
         $client = new Client();
-        $crawler = $client->request('GET', $baseURL . $urlMercaderias);
-        $return = $crawler->filter($vigencia)->eq(0)->each(function (Crawler $node, $i) {
-            preg_match('/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/', $node->text(), $matches);
+        $crawler = $client->request('GET', $baseURL . $tarifaInternacional);
+        $return = $crawler->filter($interSecondClassValidity)->eq(0)->each(function (Crawler $node, $i) {
+            preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/", $node->text(), $matches);
 
-            $baseActualizadaHasta = "08/07/2013";
-            $return['update'] = false;
-            if ($matches[0] > $baseActualizadaHasta) {
-                $return['update'] = true;
-                
-            }
-            $return['vigencia'] = $matches[0];
+            $baseActualizadaHasta = "08/07/2013";//@TODO request from database
             
+            $return['validity'] = '';
+            $return['update'] = false;
+            if (!empty($matches) && ($matches[0] > $baseActualizadaHasta)) {
+                $return['update'] = true;
+                $return['validity'] = $matches[0];
+            }
             return $return;
         });
-
-        return array('message' => $return[0]);
+        
+        return $return;
+    }
+    
+    /**
+     * Updates shipping from Serpost webpage
+     */
+    private function updateShipping()
+    {
+        //@TODO web scraping
+        return array();
     }
 }

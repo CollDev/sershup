@@ -1,0 +1,90 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>ShipmentMethods</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Virtuemartvendorid</th>
+                <td>{{ entity.virtuemartVendorId }}</td>
+            </tr>
+            <tr>
+                <th>Shipmentjpluginid</th>
+                <td>{{ entity.shipmentJpluginId }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ entity.slug }}</td>
+            </tr>
+            <tr>
+                <th>Shipmentelement</th>
+                <td>{{ entity.shipmentElement }}</td>
+            </tr>
+            <tr>
+                <th>Shipmentparams</th>
+                <td>{{ entity.shipmentParams }}</td>
+            </tr>
+            <tr>
+                <th>Ordering</th>
+                <td>{{ entity.ordering }}</td>
+            </tr>
+            <tr>
+                <th>Shared</th>
+                <td>{{ entity.shared }}</td>
+            </tr>
+            <tr>
+                <th>Published</th>
+                <td>{{ entity.published }}</td>
+            </tr>
+            <tr>
+                <th>Createdon</th>
+                <td>{{ entity.createdOn|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Createdby</th>
+                <td>{{ entity.createdBy }}</td>
+            </tr>
+            <tr>
+                <th>Modifiedon</th>
+                <td>{{ entity.modifiedOn|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Modifiedby</th>
+                <td>{{ entity.modifiedBy }}</td>
+            </tr>
+            <tr>
+                <th>Lockedon</th>
+                <td>{{ entity.lockedOn|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Lockedby</th>
+                <td>{{ entity.lockedBy }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('shipmentmethods') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('shipmentmethods_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('shipmentmethods_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}
